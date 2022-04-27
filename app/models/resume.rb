@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Resume < ApplicationRecord
-  extend FriendlyId
-  friendly_id :random_slug, use: :slugged
+  acts_as_paranoid
+  include Slugable
 
   has_one_attached :mugshot
   has_many_attached :attachments
@@ -20,6 +20,8 @@ class Resume < ApplicationRecord
 
   # relationships
   belongs_to :user
+  has_many :vendor_resumes
+  has_many :vendors, through: :vendor_resumes
 
   def self.all_status
     [
@@ -28,17 +30,12 @@ class Resume < ApplicationRecord
     ]
   end
 
-  # ref: https://stackoverflow.com/questions/34707159/how-to-make-case-sensitive-urls-with-rails-friendly-id
   def normalize_friendly_id(value)
     value.to_s.parameterize(preserve_case: true)
   end
 
   private
-
-  def random_slug
-    [*'A'..'Z', *'a'..'z', *'0'..'9'].sample(10).join
-  end
-
+  
   def set_as_default
     self.pinned = true if user.resumes.count.zero?
   end

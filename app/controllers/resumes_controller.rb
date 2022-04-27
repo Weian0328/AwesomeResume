@@ -66,6 +66,14 @@ class ResumesController < BaseController
     redirect_to my_resumes_path
   end
 
+  def buy
+    # 建立訂單
+    resume = Resume.published.friendly.find(params[:id])
+    order = current_user.orders.create(price: 10, resume: resume)
+
+    redirect_to checkout_order_path(order)
+  end
+
   private
 
   def resume_params

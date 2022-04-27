@@ -18,6 +18,9 @@ gem 'rubocop', '~> 1.28', require: false
 gem 'sqlite3', '~> 1.4'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+gem 'paranoia', '~> 2.6'
+gem 'braintree', '~> 4.7'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
