@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
     
     def checkout
         @token = gateway.client_token.generate
+        @order = Order.friendly.find(params[:id])
     end
     
     private
@@ -17,7 +18,3 @@ class OrdersController < ApplicationController
     end
 end
 
-
-def method_name
-
-end
