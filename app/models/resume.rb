@@ -2,6 +2,7 @@
 
 class Resume < ApplicationRecord
   acts_as_paranoid
+
   include Slugable
 
   has_one_attached :mugshot
@@ -22,6 +23,7 @@ class Resume < ApplicationRecord
   belongs_to :user
   has_many :vendor_resumes
   has_many :vendors, through: :vendor_resumes
+  has_many :comments
 
   def self.all_status
     [
