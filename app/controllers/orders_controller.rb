@@ -5,6 +5,19 @@ class OrdersController < ApplicationController
         @token = gateway.client_token.generate
         @order = Order.friendly.find(params[:id])
     end
+
+    def pay
+        @order = Order.friendly.find(params[:id])
+        result = gateway.transaction.sale(
+        amount: @order.price,
+        payment_method_nonce: params[:nonce],
+        )
+        if result.success?
+            redirect_to root_path, notice: "ok"
+        else
+            redirect_to root_path, notice: "fail"
+        end
+    end
     
     private
 
